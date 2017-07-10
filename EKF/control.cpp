@@ -733,9 +733,12 @@ void Ekf::controlHeightFusion()
 	}
 
 	// set the height data source to range if requested
-	if ((_params.vdist_sensor_type == VDIST_SENSOR_RANGE) && !_rng_hgt_faulty) {
-		setControlRangeHeight();
-		_fuse_height = _range_data_ready;
+	if ((_params.vdist_sensor_type == VDIST_SENSOR_RANGE)) {
+		
+		if(_range_data_ready && !_rng_hgt_faulty) {
+			setControlRangeHeight();
+			_fuse_height = true;
+		}
 	}
 
 	// Determine if GPS should be used as the height source
